@@ -4,6 +4,7 @@ from urllib.parse import urlparse
 from PIL import Image
 import subprocess
 import traceback
+import jdatetime
 import datetime
 import yt_dlp
 import string
@@ -47,6 +48,12 @@ def nowtime():
     # Time.today()
     return Time
 
+
+def jnowtime():
+    # Tehran_TZ
+    Time = jdatetime.datetime.now() + jdatetime.timedelta(hours=3, minutes=30)
+    return Time
+    
 
 def generate_random_tmp_filename(puffix="", suffix=None, length=8):
     letters_and_digits = string.ascii_letters + string.digits
