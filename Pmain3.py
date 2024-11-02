@@ -43,14 +43,11 @@ def osremove(files: list):
 
 
 def nowtime():
-    # Tehran_TZ
     Time = datetime.datetime.now() + datetime.timedelta(hours=3, minutes=30)
-    # Time.today()
     return Time
 
 
 def jnowtime():
-    # Tehran_TZ
     Time = jdatetime.datetime.now() + jdatetime.timedelta(hours=3, minutes=30)
     return Time
     
