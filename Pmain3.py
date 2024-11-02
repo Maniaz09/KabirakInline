@@ -230,7 +230,7 @@ def ping_manager(client, update: M):
 
 @bot.on_message(filters=filters.command("ping") & filters.incoming)
 def pingg(client, update: M):
-    ping_manager(client, update: M)
+    ping_manager(client, update)
 
 
 @bot.on_message(filters.regex(r'https?://[^\s]+'))
