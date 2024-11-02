@@ -4,6 +4,7 @@ from urllib.parse import urlparse
 from PIL import Image
 import subprocess
 import traceback
+import datetime
 import yt_dlp
 import string
 import random
@@ -38,6 +39,13 @@ def osremove(files: list):
         except:
             pass
     print(f"Deleted: {' | '.join(files)}")
+
+
+def nowtime():
+    # Tehran_TZ
+    Time = datetime.datetime.now() + datetime.timedelta(hours=3, minutes=30)
+    # Time.today()
+    return Time
 
 
 def generate_random_tmp_filename(puffix="", suffix=None, length=8):
@@ -192,6 +200,37 @@ def extract_urls(input_string):
 
     cleaned_urls = [urlparse(url).geturl() for url in matches]
     return cleaned_urls
+
+
+def ping_manager(client, update: M):
+    date1 = update.date
+    msg1: M = update.reply_text(".")
+    date2 = datetime.datetime.now()
+    deltad = (date2 - date1).total_seconds()
+    time1 = nowtime()
+    msg2: M = msg1.edit_text(text="..")
+    time2 = nowtime()
+    deltat = (time2 - time1).total_seconds()
+    msg2.edit_text(text="...")
+    filename = None
+    try:
+        dl1 = nowtime()
+        filename = wget.download("http://cachefly.cachefly.net/10mb.test")
+        dl2 = nowtime()
+        deltadl = round(10 / (dl2 - dl1).total_seconds(), 2)
+    except:
+        deltadl = None
+    text = ("دریافت پیام توسط سرور: {} ثانیه\n"
+            "**پاسخ به پیام: {} ثانیه**\n"
+            "سرعت دانلود: {}MB/s"
+            "\n{}").format(round(deltad, 3), round(deltat, 3), deltadl, jnowtime().strftime("%Y/%m/%d - %H:%M:%S"))
+    osremove([filename])
+    msssg: M = msg2.edit_text(text=text)
+
+
+@bot.on_message(filters=filters.command("ping") & filters.incoming)
+def pingg(client, update: M):
+    ping_manager(client, update: M)
 
 
 @bot.on_message(filters.regex(r'https?://[^\s]+'))
