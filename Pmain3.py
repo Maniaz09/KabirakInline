@@ -68,9 +68,9 @@ def video_downloader(update: M, url):
     dest_fmt = None
     formats = idict["formats"]
 
-    with open(f"yt-dlp_{update.from_user.id}.json", "w") as ytdlp_w:
-        json.dump(idict, ytdlp_w, indent=4, ensure_ascii=False)
-    update.reply_document(ytdlp_w.name)
+    # with open(f"yt-dlp_{update.from_user.id}.json", "w") as ytdlp_w:
+        # json.dump(idict, ytdlp_w, indent=4, ensure_ascii=False)
+    # update.reply_document(ytdlp_w.name)
     
     for fmt in formats:
         if fmt.get("height") == 480:
