@@ -104,8 +104,6 @@ def video_downloader(update: M, url):
         msg.edit_text(text="امکان دانلود از لینک داده شده وجود ندارد.")
         return
 
-    msg.edit_text(text="Downloading...")
-    ydl.download([url])
     title = info_dict["fulltitle"]
     duration = info_dict["duration"]
     webpage_url = info_dict["webpage_url"]
@@ -117,7 +115,10 @@ def video_downloader(update: M, url):
     # tags
     # categories
     caption += tags + categories
-
+    
+    msg.edit_text(text="Downloading...")
+    ydl.download([url])
+    
     msg.edit_text(text="Uploading..")
     try:
         update.reply_video(video=output_path, caption=caption, duration=duration, width=width, height=height, thumb=thumb, quote=False)
