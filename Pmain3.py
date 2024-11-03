@@ -67,17 +67,17 @@ def video_downloader(update: M, url):
     idict = idl.extract_info(url, download=False)
     dest_fmt = None
     formats = idict["formats"]
+
+    with open(f"yt-dlp_{update.from_user.id}.json", "w") as ytdlp_w:
+        json.dump(idict, ytdlp_w, indent=4, ensure_ascii=False)
+    update.reply_document(ytdlp_w.name)
+    
     for fmt in formats:
         if fmt["height"] == 480:
             if fmt.get("acodec") and fmt.get("vcodec"):
                 dest_fmt = fmt["format_id"]
                 break
-
-    # with open(f"yt-dlp_{update.from_user.id}.json", "w") as ytdlp_w:
-        # json.dump(idict, ytdlp_w, indent=4, ensure_ascii=False)
-    # update.reply_document(ytdlp_w.name)
-
-
+                
     options = {
     # "format": "bestvideo[height=?480][fps<=?30]",
     # "format": "bestvideo[height=?480]",
