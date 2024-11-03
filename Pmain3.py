@@ -74,7 +74,7 @@ def video_downloader(update: M, url):
     
     for fmt in formats:
         if fmt.get("height") == 480:
-            if fmt.get("acodec") and fmt.get("vcodec") or not (fmt.get("acodec") or fmt.get("vcodec")):
+            if fmt.get("acodec") and fmt.get("vcodec"): #   or not (fmt.get("acodec") or fmt.get("vcodec"))
                 dest_fmt = fmt["format_id"]
                 break
                 
