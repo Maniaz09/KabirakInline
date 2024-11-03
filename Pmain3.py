@@ -73,7 +73,16 @@ def video_downloader(update: M, url):
     # update.reply_document(ytdlp_w.name)
     
     for fmt in formats:
-        if fmt.get("height") == 480:
+        height = fmt.get("height")
+        width = fmt.get("width")
+        if not (width and height):
+            continue
+        if width > height:
+            size = height
+        else:
+            size = width
+            
+        if size == 480:
             if fmt.get("acodec") and fmt.get("vcodec"): #   or not (fmt.get("acodec") or fmt.get("vcodec"))
                 dest_fmt = fmt["format_id"]
                 break
