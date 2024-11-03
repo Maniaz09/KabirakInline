@@ -87,13 +87,18 @@ def video_downloader(update: M, url):
         }
     ydl = yt_dlp.YoutubeDL(options)
 
-
+    tags = ""
+    categories = ""
     try:
         info_dict = ydl.extract_info(url, download=False)
         with open(f"yt-dlp_{update.from_user.id}.json", "w") as ytdlp_w:
             json.dump(info_dict, ytdlp_w, indent=4, ensure_ascii=False)
-        tags = " ".join([f"#{x}".replace(" ", "_") for x in info_dict["tags"]])
-        categories = " ".join([f"#{x}".replace(" ", "_") for x in info_dict["categories"]])
+        if info_dict.get("tags"):
+            tags = " ".join([f"#{x}".replace(" ", "_") for x in info_dict["tags"]])
+            tags = f"\ntags:\n||{tags}||"
+        if info_dict.get("categories"):
+            categories = " ".join([f"#{x}".replace(" ", "_") for x in info_dict["categories"]])
+            categories = f"\n\ncategories:\n||{categories}||"
     except Exception as E:
         print(E)
         msg.edit_text(text="امکان دانلود از لینک داده شده وجود ندارد.")
@@ -107,8 +112,11 @@ def video_downloader(update: M, url):
     width = info_dict["width"]
     height = info_dict["height"]
     output_path = ydl.prepare_filename(info_dict)
-    caption = f"**[{title}]({webpage_url})**\ntags:\n||{tags}||\n\ncategories:\n||{categories}||"
+    caption = f"**[{title}]({webpage_url})**"
     thumb = get_yt_thumbnail(url, (width, height))
+    # tags
+    # categories
+    caption += tags + categories
 
     msg.edit_text(text="Uploading..")
     try:
