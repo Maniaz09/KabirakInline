@@ -79,6 +79,7 @@ def remove_directory(directory_path):
         print(f"Error removing directory '{directory_path}': {e}")
         return False
 
+
 def get_file_info(message: M):
     file_info = False
     m = message
@@ -124,7 +125,6 @@ def osremove(files: list):
 
 
 def zipit(files, zipfilename):
-    remove_directory(os.path.dirname(zipfilename))
     with zipfile.ZipFile(zipfilename, 'w') as ZiPit:
         for file in files:
             ZiPit.write(file, arcname=os.path.basename(file))
@@ -187,7 +187,7 @@ def convert_bytes_to_human_readable_size(bytes_input, lang="en"):
         unit_index += 1
 
     # Format the result with 2 decimal places
-    result = "{:.1f} {}".format(size, size_units[unit_index])
+    result = "{:.0f} {}".format(size, size_units[unit_index])
     if lang == "fa":
         result = ETPnumbers(result)
     return result
@@ -277,7 +277,7 @@ def media_manager(client: C, update: M):
                     users_zipping[ud.sui]["filesize"] = total_file_size
                     tedad = len(users_zipping[ud.sui]["files"])
                     FSLfa, TFSfa = cbthrs(FileSizeLimit, "fa"), cbthrs(total_file_size, "fa")
-                    cool_thing = create_progress_bar(total=FileSizeLimit, completed=total_file_size, bar_length=30, filled_char="○", empty_char="●")
+                    cool_thing = create_progress_bar(total=FileSizeLimit, completed=total_file_size, bar_length=12)
                     msg: M = update.reply_text(text="به لیست اضافه شد! حواست باشه که محدودیت حجمی فعلی ربات {}ه.\n{} فایل. مجموعا {} از {}\n{}".format(FSLfa, ETPnumbers(tedad), TFSfa, FSLfa, cool_thing),
                                                reply_markup=ADDING_FILES_KBR)
                     users_zipping[ud.sui]["msg"] = msg
@@ -308,6 +308,7 @@ def zip_user_files(client: C, update: M, user: User):
     msg.edit_text(text="در حال دانلود فایل ها...")
     file_ids = users_zipping_data["files"]
     direction = f"/zipped/{ud.sui}"
+	remove_directory(direction)
     os.makedirs(name=direction, exist_ok=True)
     filename = "{}.zip".format(users_zipping_data["filename"])
     path = os.path.join(direction, filename)
