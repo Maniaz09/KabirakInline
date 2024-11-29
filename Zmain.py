@@ -152,7 +152,7 @@ def zip_files(file_list, zip_name):
                 else:
                     print(f"Skipping invalid file: {file_path}")
         print(f"Files have been successfully zipped into '{zip_name}'.")
-        return True
+        return zip_name
     except Exception as e:
         print(f"Error zipping files: {e}")
         return False
