@@ -6,6 +6,7 @@ import threading
 import jdatetime
 import datetime
 import zipfile
+import shutil
 import wget
 import os
 
@@ -52,6 +53,32 @@ FileSizeLimit = 32 * 1024 * 1024
 ADDING_FILES_KBR = IKM([[IKB(text="همینا رو زیپ کن 📚", callback_data="done_adding")]])
 
 
+def remove_directory(directory_path):
+    """
+    Fully removes the given directory, including all files and subdirectories.
+
+    Args:
+        directory_path (str): The path to the directory to remove.
+    
+    Returns:
+        bool: True if the directory was successfully removed, False otherwise.
+    """
+    if not os.path.exists(directory_path):
+        print(f"Directory '{directory_path}' does not exist.")
+        return False
+    
+    if not os.path.isdir(directory_path):
+        print(f"Path '{directory_path}' is not a directory.")
+        return False
+
+    try:
+        shutil.rmtree(directory_path)
+        print(f"Directory '{directory_path}' has been removed.")
+        return True
+    except Exception as e:
+        print(f"Error removing directory '{directory_path}': {e}")
+        return False
+
 def get_file_info(message: M):
     file_info = False
     m = message
@@ -97,6 +124,7 @@ def osremove(files: list):
 
 
 def zipit(files, zipfilename):
+    remove_directory(os.path.dirname(zipfilename))
     with zipfile.ZipFile(zipfilename, 'w') as ZiPit:
         for file in files:
             ZiPit.write(file, arcname=os.path.basename(file))
@@ -249,7 +277,7 @@ def media_manager(client: C, update: M):
                     users_zipping[ud.sui]["filesize"] = total_file_size
                     tedad = len(users_zipping[ud.sui]["files"])
                     FSLfa, TFSfa = cbthrs(FileSizeLimit, "fa"), cbthrs(total_file_size, "fa")
-                    cool_thing = create_progress_bar(total=FileSizeLimit, completed=total_file_size, bar_length=30)
+                    cool_thing = create_progress_bar(total=FileSizeLimit, completed=total_file_size, bar_length=30, filled_char="○", empty_char="●")
                     msg: M = update.reply_text(text="به لیست اضافه شد! حواست باشه که محدودیت حجمی فعلی ربات {}ه.\n{} فایل. مجموعا {} از {}\n{}".format(FSLfa, ETPnumbers(tedad), TFSfa, FSLfa, cool_thing),
                                                reply_markup=ADDING_FILES_KBR)
                     users_zipping[ud.sui]["msg"] = msg
