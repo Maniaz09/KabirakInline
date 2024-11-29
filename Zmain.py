@@ -132,6 +132,32 @@ def zipit(files, zipfilename):
     return zipfilename
 
 
+def zip_files(file_list, zip_name):
+    """
+    Zips the given files using their base names into a single zip file.
+
+    Args:
+        file_list (list): List of file paths to be zipped.
+        zip_name (str): The name of the output zip file.
+
+    Returns:
+        bool: True if the files were successfully zipped, False otherwise.
+    """
+    try:
+        with zipfile.ZipFile(zip_name, 'w') as zipf:
+            for file_path in file_list:
+                if os.path.isfile(file_path):
+                    base_name = os.path.basename(file_path)
+                    zipf.write(file_path, arcname=base_name)
+                else:
+                    print(f"Skipping invalid file: {file_path}")
+        print(f"Files have been successfully zipped into '{zip_name}'.")
+        return True
+    except Exception as e:
+        print(f"Error zipping files: {e}")
+        return False
+
+
 def system_ping_manager(client, update: M):
     date1 = update.date
     msg1: M = update.reply_text(".")
@@ -317,9 +343,10 @@ def zip_user_files(client: C, update: M, user: User):
         tmp_fp = bot.download_media(file_id)
         files.append(tmp_fp)
     msg.edit_text(text="در حال زیپ کردن فایل ها...")
-    ziped_file = zipit(files=files, zipfilename=path)
+    ziped_file = zip_files(files=files, zipfilename=path)
     msg.edit_text(text="در حال آپلود...")
     caption = os.path.basename(ziped_file)
+     caption = ""
     if isp:
         bot.send_document(chat_id=ud.user_id, document=ziped_file, caption=caption)
     else:
