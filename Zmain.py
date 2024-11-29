@@ -127,10 +127,11 @@ def osremove(files: list):
 def zipit(files, zipfilename):
     with zipfile.ZipFile(zipfilename, 'w') as ZiPit:
         for file in files:
-            with open(file, "rb") as cred:
-                content = cred.read()
-            ZiPit.writestr(os.path.basename(file), content)
-            #ZiPit.write(file, arcname=os.path.basename(file))
+            print(file)
+            #with open(file, "rb") as cred:
+            #    content = cred.read()
+            #ZiPit.writestr(os.path.basename(file), content)
+            ZiPit.write(file, arcname=os.path.basename(file))
             #ZiPit.write(file)
     print('Done zipingit.')
     return zipfilename
