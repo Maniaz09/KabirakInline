@@ -308,7 +308,7 @@ def zip_user_files(client: C, update: M, user: User):
     msg.edit_text(text="در حال دانلود فایل ها...")
     file_ids = users_zipping_data["files"]
     direction = f"/zipped/{ud.sui}"
-	remove_directory(direction)
+    remove_directory(direction)
     os.makedirs(name=direction, exist_ok=True)
     filename = "{}.zip".format(users_zipping_data["filename"])
     path = os.path.join(direction, filename)
