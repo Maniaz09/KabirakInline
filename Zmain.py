@@ -127,7 +127,8 @@ def osremove(files: list):
 def zipit(files, zipfilename):
     with zipfile.ZipFile(zipfilename, 'w') as ZiPit:
         for file in files:
-            ZiPit.write(file, arcname=os.path.basename(file))
+            #ZiPit.write(file, arcname=os.path.basename(file))
+            ZiPit.write(file)
     print('Done zipit.')
     return zipfilename
 
