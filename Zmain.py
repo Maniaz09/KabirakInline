@@ -345,10 +345,10 @@ def zip_user_files(client: C, update: M, user: User):
     msg.edit_text(text="در حال زیپ کردن فایل ها...")
     ziped_file = zip_files(files=files, zipfilename=path)
     msg.edit_text(text="در حال آپلود...")
-    caption = os.path.basename(ziped_file)
-    caption = ""
+    #caption = os.path.basename(ziped_file)
+    #caption = ""
     if isp:
-        bot.send_document(chat_id=ud.user_id, document=ziped_file, caption=caption)
+        bot.send_document(chat_id=ud.user_id, document=ziped_file, caption="کپشن")
     else:
         update.reply_to_message.reply_document(document=ziped_file, file_name=caption)
     msg.delete()
