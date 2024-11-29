@@ -47,7 +47,7 @@ IMAN = InputMediaAnimation
 IMAU = InputMediaAudio
 PRIVATE = enums.ChatType.PRIVATE
 event = threading.Event()
-FileSizeLimit = 32 * 1024 * 1024
+FileSizeLimit = 2 * 1024 * 1024 * 1024
 
 
 ADDING_FILES_KBR = IKM([[IKB(text="همینا رو زیپ کن 📚", callback_data="done_adding")]])
