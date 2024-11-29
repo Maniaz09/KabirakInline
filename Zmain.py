@@ -344,7 +344,7 @@ def zip_user_files(client: C, update: M, user: User):
         tmp_fp = bot.download_media(file_id)
         files.append(tmp_fp)
     msg.edit_text(text="در حال زیپ کردن فایل ها...")
-    ziped_file = zip_files(files, path)
+    ziped_file = zipit(files, path)
     msg.edit_text(text="در حال آپلود...")
     #caption = os.path.basename(ziped_file)
     #caption = ""
