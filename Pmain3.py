@@ -19,7 +19,7 @@ import re
 C, M = Client, types.Message
 api_id = 7447592
 api_hash = "bf96474b58fd173bca087217d01d16ad"
-API_KEY = "6192704322:AAGuitTJFW3DkG7ZQNLr2eGdfCjX2OB_cn8"
+API_KEY = os.environ["PAPI_KEY"]
 bot = Client(name="VideoDL", bot_token=API_KEY, api_id=api_id, api_hash=api_hash, no_updates=False)
 Mani_J = 1044031423
 bot.start()
