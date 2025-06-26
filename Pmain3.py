@@ -114,10 +114,10 @@ def video_downloader(update: M, url):
         return
 
     title = info_dict["fulltitle"]
-    duration = info_dict["duration"]
+    duration = int(info_dict["duration"])
     webpage_url = info_dict["webpage_url"]
-    width = info_dict["width"]
-    height = info_dict["height"]
+    width = int(info_dict["width"])
+    height = int(info_dict["height"])
     output_path = ydl.prepare_filename(info_dict)
     caption = f"**[{title}]({webpage_url})**"
     thumb = get_yt_thumbnail(url, (width, height))
